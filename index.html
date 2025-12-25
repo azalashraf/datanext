@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Next Tech</title>
+    
+    <!-- Firebase SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js"></script>
+
+    <!-- Link to CSS file -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- NAVBAR -->
+    <nav>
+        <div class="container nav-inner">
+            <div class="logo">
+                <!-- LOGO IMAGE: Ensure your file is named 'logo.jpg' and is in the same folder -->
+                <img src="logo.jpg" alt="Data Next Tech" class="logo-img">
+                <span>Data Next Tech</span>
+            </div>
+            <div class="nav-links">
+                <a href="#about">About</a>
+                <a href="#services">Services</a>
+                <a href="#team">Team</a>
+                <a href="#work">Projects</a>
+                <a href="#contact" class="btn btn-sm btn-primary" style="color: black;">Contact Us</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- HERO -->
+    <section class="hero container">
+        <div class="hero-grid">
+            <div>
+                <h1>Data Intelligence for <br><span class="text-gradient">Modern Startups</span></h1>
+                <p>We provide top-tier Data Analysis, Visualization, and Forecasting services to transform your raw data into actionable business insights.</p>
+                <a href="#contact" class="btn btn-primary">Get Started</a>
+            </div>
+            <div class="card" style="border-color: var(--primary); box-shadow: 0 0 30px rgba(56,189,248,0.1);">
+                <div style="font-family: monospace; color: var(--text-muted);">
+                    <div style="color: var(--secondary);">class</div> <span style="color: var(--primary);">DataNext</span> {<br>
+                    &nbsp;&nbsp;core_stack: [<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#22c55e">"Python (Pandas, NumPy)"</span>,<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#22c55e">"SQL & MySQL"</span>,<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#22c55e">"Power BI & Excel"</span><br>
+                    &nbsp;&nbsp;];<br>
+                    &nbsp;&nbsp;status: <span style="color:#22c55e">"Ready to Optimize"</span>;<br>
+                    }
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ABOUT US SECTION -->
+    <section id="about" class="section bg-light">
+        <div class="container">
+            <div class="hero-grid">
+                <div>
+                    <h2>About Data Next Tech</h2>
+                    <p>Founded by Azal Ashraf, Data Next Tech is dedicated to bridging the gap between complex data and business growth. Leveraging a background in Computer Science (B.Tech) and specialized certification in Data Analytics, we deliver enterprise-grade solutions.</p>
+                    <p>Our mission is simple: <strong>Empower businesses with data-driven decisions.</strong></p>
+                    <div style="display: flex; gap: 20px; margin-top: 30px;">
+                        <div>
+                            <h3 style="color: var(--primary);">2+ Years</h3>
+                            <p style="font-size: 0.9rem;">Data Experience</p>
+                        </div>
+                        <div>
+                            <h3 style="color: var(--primary);">150K+</h3>
+                            <p style="font-size: 0.9rem;">Records Processed</p>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80&w=800" alt="Data Analytics Dashboard" style="width: 100%; border-radius: 12px; border: 1px solid var(--border); opacity: 0.8;">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SERVICES SECTION -->
+    <section id="services" class="section">
+        <div class="container">
+            <div class="text-center" style="margin-bottom: 60px;">
+                <h2>Our Services</h2>
+                <p>Expert technical solutions tailored to your data needs</p>
+            </div>
+            
+            <div id="services-container" class="grid-3">
+                <!-- Service 1 -->
+                <div class="card">
+                    <div class="icon-box"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg></div>
+                    <h3>Data Analysis & EDA</h3>
+                    <p>Python-based exploratory data analysis using Pandas and NumPy to uncover hidden patterns and trends.</p>
+                </div>
+                <!-- Service 2 -->
+                <div class="card">
+                    <div class="icon-box"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg></div>
+                    <h3>Visualization & Dashboards</h3>
+                    <p>Interactive Power BI dashboards tracking Revenue, Profit, and Growth KPIs for clear visual storytelling.</p>
+                </div>
+                <!-- Service 3 -->
+                <div class="card">
+                    <div class="icon-box"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg></div>
+                    <h3>Automated Reporting</h3>
+                    <p>Streamlined Excel reporting using Power Query and Pivot Tables, reducing manual effort by up to 40%.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- TEAM MEMBER SECTION -->
+    <section id="team" class="section bg-light">
+        <div class="container">
+            <div class="text-center" style="margin-bottom: 60px;">
+                <h2>Meet the Team</h2>
+                <p>The minds behind the code</p>
+            </div>
+            
+            <div class="grid-4">
+                <!-- Updated with Azal Ashraf's Info -->
+                <div class="card team-card">
+                    <div class="team-avatar">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                    </div>
+                    <h3>Azal Ashraf</h3>
+                    <div class="team-role">Founder & Data scientist  </div>
+                    <p style="font-size: 0.9rem; margin: 0;">B.Tech in CS. Expert in Forecasting models (ARIMA), SQL, and Power BI visualization.</p>
+                </div>
+                
+                <!-- Placeholder Members -->
+                <div class="card team-card">
+                    <div class="team-avatar">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                    </div>
+                    <h3>Sarah Chen</h3>
+                    <div class="team-role">Web Developer</div>
+                    <p style="font-size: 0.9rem; margin: 0;">Full-stack specialist focusing on React, Node.js, and scalable architecture.</p>
+                </div>
+             
+                <div class="card team-card">
+                    <div class="team-avatar">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                    </div>
+                    <h3>Aquib </h3>
+                    <div class="team-role">Analyst </div>
+                    <p style="font-size: 0.9rem; margin: 0;">Expertise in Excel for complex data products.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PREVIOUS PROJECTS -->
+    <section id="work" class="section">
+        <div class="container">
+            <div class="text-center" style="margin-bottom: 60px;">
+                <h2>Previous Projects</h2>
+                <p>See what we've built for our clients</p>
+            </div>
+
+            <div id="projects-container" class="grid-3">
+                <!-- Project 1: Sales Forecasting -->
+                <div class="project-card">
+                    <div class="project-img"><svg width="40" height="40" stroke="white" viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M23 6l-9.5 9.5-5-5L1 18"></path><path d="M17 6h6v6"></path></svg></div>
+                    <div class="project-body">
+                        <span class="project-tag">Python & SQL</span>
+                        <h3>Sales Forecasting & Revenue</h3>
+                        <p>Developed ARIMA & XGBoost models on 150K+ records, improving accuracy by 25%.</p>
+                    </div>
+                </div>
+                <!-- Project 2: E-commerce Dashboard -->
+                <div class="project-card">
+                    <div class="project-img"><svg width="40" height="40" stroke="white" viewBox="0 0 24 24" fill="none" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg></div>
+                    <div class="project-body">
+                        <span class="project-tag">Power BI</span>
+                        <h3>E-commerce Dashboard</h3>
+                        <p>Automated KPI tracking connected to Excel, identifying key category performance.</p>
+                    </div>
+                </div>
+                <!-- Project 3: Customer Analysis -->
+                <div class="project-card">
+                    <div class="project-img"><svg width="40" height="40" stroke="white" viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg></div>
+                    <div class="project-body">
+                        <span class="project-tag">Segmentation</span>
+                        <h3>Customer Behaviour Analysis</h3>
+                        <p>Identified top 10% high-value customers driving 45% of revenue using SQL.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CONTACT SECTION -->
+    <section id="contact" class="section bg-light">
+        <div class="container">
+            <div class="hero-grid">
+                <div>
+                    <h2>Get in Touch</h2>
+                    <p>Ready to start your project? Fill out the form below and our team will get back to you within 24 hours.</p>
+                    
+                    <div style="margin-top: 30px;">
+                        <div style="display: flex; gap: 15px; margin-bottom: 20px;">
+                            <div style="color: var(--primary);">✉</div>
+                            <span>datanext.tech@gmail.com</span>
+                        </div>
+                        <div style="display: flex; gap: 15px;">
+                            <div style="color: var(--primary);">📍</div>
+                            <span>India</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <form id="contactForm">
+                        <div class="form-group">
+                            <label>Name</label>
+                            <input type="text" id="contactName" required placeholder="Your Name">
+                        </div>
+                        <div class="form-group">
+                            <label>Email</label>
+                            <input type="email" id="contactEmail" required placeholder="your@email.com">
+                        </div>
+                        <div class="form-group">
+                            <label>Service Interested In</label>
+                            <select id="contactService">
+                                <option value="Data Analysis">Data Analysis</option>
+                                <option value="Visualization">Power BI Visualization</option>
+                                <option value="Forecasting">Forecasting & Reporting</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Message</label>
+                            <textarea id="contactMessage" rows="4" required placeholder="Tell us about your project..."></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary" style="width: 100%;">Send Message</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ADMIN PANEL TOGGLE (Footer) -->
+    <footer style="padding: 40px 0; border-top: 1px solid var(--border); text-align: center; color: var(--text-muted);">
+        <div class="container">
+            <p>&copy; 2025 Data Next Tech. All rights reserved.</p>
+            <button onclick="toggleAdmin()" style="background: none; border: none; color: var(--text-muted); text-decoration: underline; cursor: pointer; font-size: 0.8rem; margin-top: 10px;">
+                Admin Login (Upload Data & View Messages)
+            </button>
+        </div>
+    </footer>
+
+    <!-- ADMIN DASHBOARD (Hidden by default) -->
+    <section id="admin-panel">
+        <div class="container">
+            <h2 class="text-center" style="margin-bottom: 40px; color: var(--primary);">Admin Dashboard</h2>
+            
+            <div class="admin-grid">
+                <!-- Upload Service Form -->
+                <div class="admin-form">
+                    <h3>Add New Service</h3>
+                    <form id="addServiceForm">
+                        <div class="form-group">
+                            <label>Service Title</label>
+                            <input type="text" id="serviceTitle" placeholder="e.g., SEO Optimization" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Description</label>
+                            <textarea id="serviceDesc" rows="2" placeholder="Short description..." required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-secondary" style="width: 100%;">Upload Service</button>
+                    </form>
+                </div>
+
+                <!-- Upload Project Form -->
+                <div class="admin-form">
+                    <h3>Add Previous Project</h3>
+                    <form id="addProjectForm">
+                        <div class="form-group">
+                            <label>Project Title</label>
+                            <input type="text" id="projectTitle" placeholder="e.g., E-Commerce App" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Category</label>
+                            <input type="text" id="projectCategory" placeholder="e.g., Web Development" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Description</label>
+                            <textarea id="projectDesc" rows="2" placeholder="What did we build?" required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-secondary" style="width: 100%;">Upload Project</button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- MESSAGES INBOX -->
+            <div class="admin-form" style="margin-top: 30px;">
+                <h3>Received Messages</h3>
+                <div id="messages-container">
+                    <p style="color: #94a3b8;">Waiting for messages...</p>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Link to JavaScript file -->
+    <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,201 @@
+/* --- CORE VARIABLES & RESET --- */
+:root {
+    --bg-dark: #0f172a;
+    --bg-darker: #020617;
+    --primary: #38bdf8;   /* Cyan/Blue */
+    --secondary: #818cf8; /* Indigo */
+    --text-main: #f1f5f9;
+    --text-muted: #94a3b8;
+    --card-bg: #1e293b;
+    --border: #334155;
+    --success: #22c55e;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    background-color: var(--bg-darker);
+    color: var(--text-main);
+    line-height: 1.6;
+    overflow-x: hidden;
+}
+
+/* --- UTILITIES --- */
+.container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+.section { padding: 80px 0; }
+.bg-light { background: var(--bg-dark); }
+.text-center { text-align: center; }
+.hidden { display: none !important; }
+
+/* --- TYPOGRAPHY --- */
+h1, h2, h3 { line-height: 1.2; margin-bottom: 1rem; }
+h1 { font-size: 3.5rem; font-weight: 800; }
+h2 { font-size: 2.5rem; font-weight: 700; color: var(--text-main); }
+h3 { font-size: 1.5rem; font-weight: 600; }
+p { color: var(--text-muted); margin-bottom: 1.5rem; }
+
+.text-gradient {
+    background: linear-gradient(90deg, var(--primary), var(--secondary));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+/* --- BUTTONS --- */
+.btn {
+    display: inline-block;
+    padding: 12px 28px;
+    border-radius: 50px;
+    font-weight: 600;
+    cursor: pointer;
+    border: none;
+    transition: all 0.2s;
+    font-size: 1rem;
+    text-decoration: none;
+}
+.btn-primary {
+    background: linear-gradient(90deg, var(--primary), var(--secondary));
+    color: #000;
+    box-shadow: 0 4px 15px rgba(56, 189, 248, 0.3);
+}
+.btn-primary:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(56, 189, 248, 0.4); }
+.btn-secondary { background: transparent; border: 2px solid var(--border); color: var(--text-main); }
+.btn-secondary:hover { border-color: var(--primary); color: var(--primary); }
+.btn-sm { padding: 8px 16px; font-size: 0.85rem; }
+
+/* --- NAVIGATION --- */
+nav {
+    position: fixed; top: 0; left: 0; width: 100%;
+    background: rgba(2, 6, 23, 0.95);
+    backdrop-filter: blur(10px);
+    z-index: 1000;
+    border-bottom: 1px solid var(--border);
+    padding: 15px 0;
+}
+.nav-inner { display: flex; justify-content: space-between; align-items: center; }
+.logo { font-size: 1.5rem; font-weight: 800; display: flex; align-items: center; gap: 10px; }
+
+/* LOGO IMAGE STYLE */
+.logo-img {
+    height: 50px;       
+    width: auto;        
+    border-radius: 6px; 
+    object-fit: contain; 
+    background: white; 
+    padding: 2px;
+}
+
+.nav-links { display: flex; gap: 25px; }
+.nav-links a { color: var(--text-muted); font-weight: 500; transition: color 0.3s; }
+.nav-links a:hover { color: var(--primary); }
+
+/* --- HERO SECTION --- */
+.hero { padding-top: 160px; min-height: 90vh; display: flex; align-items: center; }
+.hero-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 50px; align-items: center; }
+
+/* --- CARDS & GRIDS --- */
+.grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
+.grid-4 { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 30px; }
+
+.card {
+    background: var(--card-bg);
+    padding: 30px;
+    border-radius: 16px;
+    border: 1px solid var(--border);
+    transition: 0.3s;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    position: relative; /* Ensure z-index works */
+    z-index: 1; /* Make sure inputs are clickable */
+}
+.card:hover { transform: translateY(-5px); border-color: var(--primary); z-index: 10; }
+
+.icon-box {
+    width: 50px; height: 50px;
+    background: rgba(56, 189, 248, 0.1);
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 20px; color: var(--primary);
+}
+
+/* --- TEAM SECTION --- */
+.team-card { text-align: center; padding: 40px 20px; }
+.team-avatar {
+    width: 120px; height: 120px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--card-bg), var(--border));
+    margin: 0 auto 20px;
+    border: 2px solid var(--primary);
+    display: flex; align-items: center; justify-content: center;
+    overflow: hidden;
+}
+.team-avatar svg { width: 60px; height: 60px; color: var(--text-muted); }
+.team-role { color: var(--primary); font-size: 0.9rem; font-weight: 600; text-transform: uppercase; margin-bottom: 10px; }
+
+/* --- PROJECT/PORTFOLIO --- */
+.project-card {
+    background: var(--card-bg); border-radius: 16px; overflow: hidden; border: 1px solid var(--border);
+}
+.project-img {
+    height: 200px; background: #1e293b; display: flex; align-items: center; justify-content: center;
+}
+.project-body { padding: 25px; }
+.project-tag { display: inline-block; font-size: 0.75rem; padding: 4px 8px; background: rgba(56,189,248,0.1); color: var(--primary); border-radius: 4px; margin-bottom: 10px; }
+
+/* --- FORMS --- */
+.form-group { margin-bottom: 20px; }
+input, textarea, select {
+    width: 100%;
+    background: var(--bg-darker);
+    border: 1px solid var(--border);
+    padding: 12px;
+    border-radius: 8px;
+    color: white;
+    font-family: inherit;
+    position: relative;
+    z-index: 2;
+}
+input:focus, textarea:focus { outline: none; border-color: var(--primary); }
+
+/* Fix for Browser Autofill (forces dark background) */
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus, 
+textarea:-webkit-autofill,
+textarea:-webkit-autofill:hover,
+textarea:-webkit-autofill:focus {
+    -webkit-text-fill-color: white;
+    -webkit-box-shadow: 0 0 0px 1000px var(--bg-darker) inset;
+    transition: background-color 5000s ease-in-out 0s;
+}
+
+label { display: block; margin-bottom: 8px; color: var(--text-muted); font-size: 0.9rem; }
+
+/* --- ADMIN PANEL --- */
+#admin-panel {
+    border-top: 1px solid var(--border);
+    background: #111;
+    padding: 40px 0;
+    display: none;
+}
+#admin-panel.active { display: block; }
+.admin-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
+.admin-form { background: var(--card-bg); padding: 30px; border-radius: 12px; border: 1px solid var(--border); margin-bottom: 20px; }
+
+.message-item {
+    background: rgba(255,255,255,0.05);
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 10px;
+    border-left: 3px solid var(--primary);
+}
+.message-header { display: flex; justify-content: space-between; font-size: 0.8rem; color: var(--text-muted); margin-bottom: 5px; }
+
+/* --- RESPONSIVE --- */
+@media (max-width: 768px) {
+    .hero-grid, .admin-grid { grid-template-columns: 1fr; }
+    .nav-links { display: none; }
+    h1 { font-size: 2.5rem; }
+}
