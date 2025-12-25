@@ -1,88 +1,45 @@
-// --- 1. HOSTING INSTRUCTIONS: REPLACING CONFIG ---
-let firebaseConfig = null; 
+// --- 1. FIREBASE CONFIGURATION ---
+// PASTE YOUR KEYS INSIDE THIS OBJECT BELOW
+  const firebaseConfig = {
+    apiKey: "AIzaSyDD91o8AUil66cKPFJ3h24oNkWh6iYJC0c",
+    authDomain: "datanext-c865c.firebaseapp.com",
+    projectId: "datanext-c865c",
+    storageBucket: "datanext-c865c.firebasestorage.app",
+    messagingSenderId: "640734514110",
+    appId: "1:640734514110:web:f1d80d4ba79b789da9c7ef",
+    measurementId: "G-H110T2PPDT"
+  };
+// --- INITIALIZATION CHECK ---
+// This checks if you actually replaced the placeholder text above
+const isConfigured = firebaseConfig.apiKey !== "YOUR_API_KEY";
 
-/* EXAMPLE (Uncomment and fill this in when hosting):
-firebaseConfig = {
-    apiKey: "AIzaSy...",
-    authDomain: "your-project.firebaseapp.com",
-    projectId: "your-project",
-    storageBucket: "your-project.firebasestorage.app",
-    messagingSenderId: "...",
-    appId: "..."
-};
-*/
+let app, auth, db;
 
-// --- 2. PREVIEW LOGIC (DO NOT EDIT) ---
-let appId = 'default-app';
-if (typeof __firebase_config !== 'undefined') {
-    firebaseConfig = JSON.parse(__firebase_config);
-    appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app';
-}
-
-// --- GLOBAL VARIABLES ---
-let db = null; // Will hold the database connection if configured
-
-// --- INITIALIZATION ---
-if (firebaseConfig) {
-    const app = firebase.initializeApp(firebaseConfig);
-    const auth = firebase.auth();
+if (isConfigured) {
+    app = firebase.initializeApp(firebaseConfig);
+    auth = firebase.auth();
     db = firebase.firestore();
     
-    // Connect and then Seed Database if empty
+    // Connect to database
     auth.signInAnonymously()
-        .then(() => {
-            console.log("Connected to Database.");
-            seedDatabase(); // <--- NEW: Automatically populates DB with your resume data
-        })
+        .then(() => console.log("Connected to Database"))
         .catch((error) => console.error("Auth Error:", error));
-    
-    // Setup Real-time Listeners
+
+    // Initialize Listeners
     setupRealtimeListeners();
 } else {
-    console.warn("No Firebase Config found. Running in DEMO MODE.");
-    // In demo mode, we use the default hardcoded HTML content.
+    console.error("FIREBASE NOT CONFIGURED: Please open script.js and add your API keys.");
 }
 
-// --- DATA COLLECTION HELPER ---
-const getCollection = (name) => `artifacts/${appId}/public/data/${name}`;
+// --- CONSTANTS ---
+const COLLECTION_PREFIX = "datanext_website"; // Simplified for hosting
 
-// --- NEW: SEED DATABASE FUNCTION ---
-// This uploads your resume data to the database automatically if it's empty
-async function seedDatabase() {
-    const servicesRef = db.collection(getCollection('services'));
-    const projectsRef = db.collection(getCollection('projects'));
-
-    // 1. Seed Services
-    const servicesSnap = await servicesRef.get();
-    if (servicesSnap.empty) {
-        console.log("Seeding Services...");
-        const services = [
-             { title: "Data Analysis", description: "Python (Pandas, NumPy), SQL, and EDA. Turning complex datasets into clear, actionable business strategies." },
-             { title: "Visualization & Power BI", description: "Creating comprehensive dashboards and visual stories to track KPIs (Revenue, Profit, Growth)." },
-             { title: "Automated Reporting", description: "Excel Power Query and Pivot Tables to reduce reporting time by 40% and eliminate manual errors." }
-        ];
-        services.forEach(s => servicesRef.add({...s, created: firebase.firestore.FieldValue.serverTimestamp()}));
-    }
-
-    // 2. Seed Projects
-    const projectsSnap = await projectsRef.get();
-    if (projectsSnap.empty) {
-         console.log("Seeding Projects...");
-         const projects = [
-            { title: "Sales Forecasting", category: "Python & SQL", description: "Developed forecasting models (ARIMA & XGBoost) improving prediction accuracy by 18-25%." },
-            { title: "E-commerce Dashboard", category: "Power BI", description: "Automated KPI tracking connected to Excel, identifying key category performance." },
-            { title: "Customer Analysis", category: "Segmentation", description: "Identified top 10% high-value customers driving 45% of revenue using SQL." }
-         ];
-         projects.forEach(p => projectsRef.add({...p, created: firebase.firestore.FieldValue.serverTimestamp()}));
-    }
-}
-
-// --- REAL-TIME LISTENERS (Only runs if Firebase is connected) ---
+// --- REAL-TIME LISTENERS ---
 function setupRealtimeListeners() {
     // 1. Services
-    db.collection(getCollection('services')).onSnapshot(snapshot => {
+    db.collection(`${COLLECTION_PREFIX}_services`).onSnapshot(snapshot => {
         const container = document.getElementById('services-container');
-        if (snapshot.empty) return; // Keep hardcoded defaults if empty
+        if (snapshot.empty) return; 
         
         let html = '';
         snapshot.forEach(doc => {
@@ -98,9 +55,9 @@ function setupRealtimeListeners() {
     });
 
     // 2. Projects
-    db.collection(getCollection('projects')).onSnapshot(snapshot => {
+    db.collection(`${COLLECTION_PREFIX}_projects`).onSnapshot(snapshot => {
         const container = document.getElementById('projects-container');
-        if (snapshot.empty) return; // Keep hardcoded defaults if empty
+        if (snapshot.empty) return; 
 
         let html = '';
         snapshot.forEach(doc => {
@@ -115,21 +72,16 @@ function setupRealtimeListeners() {
     });
 
     // 3. Messages (Admin Panel)
-    db.collection(getCollection('messages')).onSnapshot(snapshot => {
+    db.collection(`${COLLECTION_PREFIX}_messages`).orderBy('timestamp', 'desc').onSnapshot(snapshot => {
         const container = document.getElementById('messages-container');
-        const messages = [];
-        snapshot.forEach(doc => messages.push(doc.data()));
-        
-        // Sort by timestamp descending
-        messages.sort((a, b) => (b.timestamp?.seconds || 0) - (a.timestamp?.seconds || 0));
-
-        if (messages.length === 0) {
+        if (snapshot.empty) {
             container.innerHTML = '<p style="color: #94a3b8;">No messages received yet.</p>';
             return;
         }
 
         let html = '';
-        messages.forEach(data => {
+        snapshot.forEach(doc => {
+            const data = doc.data();
             html += `
             <div class="message-item">
                 <div class="message-header"><span><strong>${data.name}</strong> (${data.email})</span><span>${data.service}</span></div>
@@ -140,74 +92,70 @@ function setupRealtimeListeners() {
     });
 }
 
-// --- FORM HANDLING (Works in both Real and Demo modes) ---
+// --- FORM HANDLING ---
 
 // 1. Contact Form
 document.getElementById('contactForm').addEventListener('submit', async (e) => {
-    e.preventDefault(); // STOP PAGE RELOAD
+    e.preventDefault();
     const btn = e.target.querySelector('button');
     const originalText = btn.innerText;
+    
+    if (!isConfigured) {
+        alert("ERROR: You have not added your Firebase API Keys to script.js yet!");
+        return;
+    }
+
     btn.innerText = "Sending...";
     btn.disabled = true;
 
-    const formData = {
-        name: document.getElementById('contactName').value,
-        email: document.getElementById('contactEmail').value,
-        service: document.getElementById('contactService').value,
-        message: document.getElementById('contactMessage').value,
-        timestamp: db ? firebase.firestore.FieldValue.serverTimestamp() : new Date()
-    };
-
     try {
-        if (db) {
-            // Real Mode: Save to Database
-            await db.collection(getCollection('messages')).add(formData);
-            alert("Message Sent! We will contact you soon.");
-        } else {
-            // Demo Mode: Simulate Success
-            await new Promise(resolve => setTimeout(resolve, 1000)); // Fake delay
-            console.log("Demo Message:", formData);
-            alert("Message Sent! We will contact you soon.)");
-        }
+        await db.collection(`${COLLECTION_PREFIX}_messages`).add({
+            name: document.getElementById('contactName').value,
+            email: document.getElementById('contactEmail').value,
+            service: document.getElementById('contactService').value,
+            message: document.getElementById('contactMessage').value,
+            timestamp: firebase.firestore.FieldValue.serverTimestamp()
+        });
+        alert("Message Sent Successfully!");
         e.target.reset();
     } catch (err) {
-        console.error(err);
-        alert("Error sending message.");
+        console.error("Error sending message:", err);
+        alert("Error sending message. \n\nCheck if your Database Rules are set to 'allow read, write: if true;' in the Firebase Console.");
     } finally {
         btn.innerText = originalText;
         btn.disabled = false;
     }
 });
 
-// 2. Add Service Form (Admin)
+// 2. Add Service (Admin)
 document.getElementById('addServiceForm').addEventListener('submit', async (e) => {
     e.preventDefault();
-    if (!db) { alert("Please configure Firebase keys in script.js to save data permanently."); return; }
+    if (!isConfigured) { alert("Configure API keys first."); return; }
     
     try {
-        await db.collection(getCollection('services')).add({
+        await db.collection(`${COLLECTION_PREFIX}_services`).add({
             title: document.getElementById('serviceTitle').value,
             description: document.getElementById('serviceDesc').value,
             created: firebase.firestore.FieldValue.serverTimestamp()
         });
         alert("Service Uploaded!"); e.target.reset();
-    } catch (err) { alert("Upload failed"); }
+    } catch (err) { alert("Upload failed. Check DB Rules."); }
 });
 
-// 3. Add Project Form (Admin)
+// 3. Add Project (Admin)
 document.getElementById('addProjectForm').addEventListener('submit', async (e) => {
     e.preventDefault();
-    if (!db) { alert("Please configure Firebase keys in script.js to save data permanently."); return; }
+    if (!isConfigured) { alert("Configure API keys first."); return; }
 
     try {
-        await db.collection(getCollection('projects')).add({
+        await db.collection(`${COLLECTION_PREFIX}_projects`).add({
             title: document.getElementById('projectTitle').value,
             category: document.getElementById('projectCategory').value,
             description: document.getElementById('projectDesc').value,
             created: firebase.firestore.FieldValue.serverTimestamp()
         });
         alert("Project Uploaded!"); e.target.reset();
-    } catch (err) { alert("Upload failed"); }
+    } catch (err) { alert("Upload failed. Check DB Rules."); }
 });
 
 // Admin Toggle
